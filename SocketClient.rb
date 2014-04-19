@@ -1,14 +1,13 @@
 require 'socket'
 
-s = TCPSocket.new '127.0.0.1',2000
-
-packet = [0xaa,0x55,0x01,0x11]
-msg = []
-
-packet.map! do |b|
-   "%02X" % b
+def senddata(packet)
+   data = packet.pack("C*")
+   puts data.length
+   @s.puts data
 end
-msg << packet.join
-data = msg.pack("H*")
-puts data.length
-s.puts data
+
+@s = TCPSocket.new '127.0.0.1',2000
+
+senddata [0xaa,0x55,0x05,0x11]
+senddata [0xaa,0x55,0x05,0x11]
+
